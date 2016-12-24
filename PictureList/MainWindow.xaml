@@ -5,31 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="425" Width="648" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
+        Title="MainWindow" Height="425" Width="655" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
    <Window.Resources>
-        <Style TargetType="ListBoxItem" x:Key="CustomListBoxItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border BorderThickness="2" Name="OutsideBorder" Height="120" Width="204">
-                            <Border BorderThickness="0" Margin="4" Name="InsideBorder">
-                                <ContentPresenter />
-                            </Border>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="OutsideBorder" Property="BorderBrush" 
-                                    Value="{StaticResource HoverBorderBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="OutsideBorder" Property="Background" 
-                                    Value="{StaticResource SelectedBorderBackground}"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Window.Resources>
     <Border Width="Auto" BorderThickness="1" Height="Auto" CornerRadius="0" Background="White">
         <Grid>
@@ -59,7 +37,7 @@
 
             <Grid Grid.Row="2" Grid.ColumnSpan="3">
                 <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" BorderThickness="0">
-                    
+     
                 </ListBox>
             </Grid>
 
@@ -68,7 +46,6 @@
             <Button Grid.Row="4" Grid.Column="1" Height="26" Width="80" Margin="0,13,6,10">使用说明</Button>
 
             <Button Grid.Row="4" Grid.Column="2" Height="26" Width="80" Margin="6,13,12,10">应用</Button>
-
 
         </Grid>
     </Border>
