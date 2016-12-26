@@ -36,7 +36,7 @@
             <Line Grid.Row="1" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
 
             <Grid Grid.Row="2" Grid.ColumnSpan="3">
-                <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" BorderThickness="0">
+                <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" BorderThickness="0" >
      
                 </ListBox>
             </Grid>

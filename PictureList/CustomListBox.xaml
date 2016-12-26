@@ -10,7 +10,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto">
+                    <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                         <ItemsPresenter ></ItemsPresenter>
                     </ScrollViewer>
                 </ControlTemplate>
@@ -20,12 +20,12 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" Margin="6,10,0,10">
+                    <WrapPanel Orientation="Horizontal" Margin="6,10,0,10" >
                     </WrapPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
-        
+
         <Setter Property="ItemContainerStyle">
             <Setter.Value>
                 <Style TargetType="ListBoxItem">
@@ -58,8 +58,9 @@
                 </Style>
             </Setter.Value>
         </Setter>
-        
     </Style>
+    
+    
     <Style TargetType="ListBoxItem" x:Key="CustomListBoxItem">
         <Setter Property="Template">
             <Setter.Value>
