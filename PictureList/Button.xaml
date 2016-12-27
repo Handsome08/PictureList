@@ -33,4 +33,32 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="Button" x:Key="ButtonZ">
+        <Setter Property="Foreground" Value="#ffffff"/>
+        <Setter Property="Background" Value="#65ad57" />
+        <Setter Property="Width" Value="80" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="1" CornerRadius="2" Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding Background}" >
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"  >
+
+                        </ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Button.IsMouseOver" Value="True">
+                <Setter Property="Button.Background" Value="#6dba5d"/>
+            </Trigger>
+            <Trigger Property="Button.IsPressed" Value="True">
+                <Setter Property="Button.Background" Value="#5ea150" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

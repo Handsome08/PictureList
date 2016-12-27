@@ -79,6 +79,7 @@
       <DependentUpon>CustomListBox.xaml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Compile Include="ImageFactory.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -111,8 +112,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="192_108_image1.png" />
+    <Resource Include="Pictures\192_108_image1.png" />
+    <Resource Include="Pictures\images1.jpg" />
+    <Resource Include="Pictures\images2.jpg" />
+    <Resource Include="Pictures\images3.jpg" />
+    <Resource Include="Pictures\images4.jpg" />
+    <Resource Include="Pictures\images5.jpg" />
+    <Resource Include="Pictures\images6.jpg" />
+    <Resource Include="Pictures\images7.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

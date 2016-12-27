@@ -40,9 +40,34 @@
 
         <Line Grid.Row="3" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
 
-        <Button Grid.Row="4" Grid.Column="1" Height="26" Width="80" Margin="0,13,6,10">使用说明</Button>
+        <Button Grid.Row="4" Grid.Column="1" Height="26" Width="80" Margin="0,13,6,10">
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Foreground" Value="Black"></Setter>
+                    <Setter Property="FontSize" Value="14"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Border BorderThickness="1" BorderBrush="Gainsboro" Background="{TemplateBinding Background}">
+                                    <ContentPresenter Content="使用说明" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="Button.IsMouseOver" Value="True">
+                            <Setter Property="Button.Background" Value="Gainsboro"/>
+                        </Trigger>
+                        <Trigger Property="Button.IsPressed" Value="True">
+                            <Setter Property="Button.Background" Value="DarkGray" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
 
-        <Button Grid.Row="4" Grid.Column="2" Height="26" Width="80" Margin="6,13,12,10">应用</Button>
+        <Button Style="{StaticResource ButtonZ}" Grid.Row="4" Grid.Column="2" Margin="6,13,12,10">应用</Button>
 
     </Grid>
 </Window>

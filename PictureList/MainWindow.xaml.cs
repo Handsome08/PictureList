@@ -29,31 +29,8 @@ namespace PictureList
             window.MouseLeftButtonUp += Window_MouseLeftButtonUp;
 
             List<Image> lstImage = new List<Image>();
-            Image image1 = new Image();
-            image1.Source = new BitmapImage(new Uri("192_108_image1.png",UriKind.Relative));
-            Image image2 = new Image();
-            image2.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image3 = new Image();
-            image3.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image4 = new Image();
-            image4.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image5 = new Image();
-            image5.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image6= new Image();
-            image6.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image7 = new Image();
-            image7.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            Image image8 = new Image();
-            image8.Source = new BitmapImage(new Uri("192_108_image1.png", UriKind.Relative));
-            lstImage.Add(image1);
-            lstImage.Add(image2);
-            lstImage.Add(image3);
-            lstImage.Add(image4);
-            lstImage.Add(image5);
-            lstImage.Add(image6);
-            lstImage.Add(image7);
-            lstImage.Add(image8);
-
+           
+            lstImage = ImageFactory.LoadImages();
 
             Listbox.ItemsSource = lstImage;
         }
