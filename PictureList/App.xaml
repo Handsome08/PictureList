@@ -4,11 +4,12 @@
              xmlns:local="clr-namespace:PictureList"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         <ResourceDictionary>
-             <ResourceDictionary.MergedDictionaries>
-                 <ResourceDictionary Source="Button.xaml" />
-                 <ResourceDictionary Source="CustomListBox.xaml"></ResourceDictionary>
-             </ResourceDictionary.MergedDictionaries>
-         </ResourceDictionary>
+        <ResourceDictionary >
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Button.xaml" />
+                <ResourceDictionary Source="CustomListBox.xaml"/>
+                <ResourceDictionary Source="CustomWindow.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -23,6 +23,11 @@ namespace PictureList
         public MainWindow()
         {
             InitializeComponent();
+
+            window.MouseLeftButtonDown += Window_MouseLeftButtonDown;
+            window.MouseMove += Window_MouseMove;
+            window.MouseLeftButtonUp += Window_MouseLeftButtonUp;
+
             List<Image> lstImage = new List<Image>();
             Image image1 = new Image();
             image1.Source = new BitmapImage(new Uri("192_108_image1.png",UriKind.Relative));
@@ -53,9 +58,42 @@ namespace PictureList
             Listbox.ItemsSource = lstImage;
         }
 
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            CanWinMove = true;
+            pos = PointToScreen(e.GetPosition(null));
+            Win_Left = this.Left;
+            Win_Top = this.Top;
+            this.CaptureMouse();
+        }
+
+        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            CanWinMove = false;
+            this.ReleaseMouseCapture();
+        }
+
+        private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (CanWinMove)
+            {
+                Point tempPos = PointToScreen(e.GetPosition(null));
+                this.Left = tempPos.X - pos.X + Win_Left;
+                this.Top = tempPos.Y - pos.Y + Win_Top;
+                Win_Left = this.Left;
+                Win_Top = this.Top;
+                pos = tempPos;
+            }
+            
+        }
+
         private void ButtonX_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
+        private bool CanWinMove = false;
+        Point pos = new Point();
+        private double Win_Left,Win_Top;
     }
 }

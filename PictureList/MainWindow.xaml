@@ -5,48 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="425" Width="655" WindowStyle="None" Background="Transparent" AllowsTransparency="True">
-   <Window.Resources>
-        
-    </Window.Resources>
-    <Border Width="Auto" BorderThickness="1" Height="Auto" CornerRadius="0" Background="White">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="29"></RowDefinition>
-                <RowDefinition Height="1"></RowDefinition>
-                <RowDefinition Height="345"></RowDefinition>
-                <RowDefinition Height="1"></RowDefinition>
-                <RowDefinition Height="49"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="86"></ColumnDefinition>
-                <ColumnDefinition Width="98"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        Title="MainWindow" Height="435" Width="665"  Name="window" Style="{StaticResource CustomWindow}" >
 
-            <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100">
-                <StackPanel  Orientation="Horizontal">
-                    <Label VerticalAlignment="Center" Height="29" FontSize="15">课堂活动</Label>
-                </StackPanel>
-                <Button  Style="{StaticResource ButtonY}" HorizontalAlignment="Right" 
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="345"></RowDefinition>
+            <RowDefinition Height="1"></RowDefinition>
+            <RowDefinition Height="49"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="86"></ColumnDefinition>
+            <ColumnDefinition Width="98"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100">
+            <StackPanel  Orientation="Horizontal">
+                <Label VerticalAlignment="Center" Height="29" FontSize="15">课堂活动</Label>
+            </StackPanel>
+            <Button  Style="{StaticResource ButtonY}" HorizontalAlignment="Right" 
                          FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick"/>
-                
-            </Grid>
-
-            <Line Grid.Row="1" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
-
-            <Grid Grid.Row="2" Grid.ColumnSpan="3">
-                <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" BorderThickness="0" >
-     
-                </ListBox>
-            </Grid>
-
-            <Line Grid.Row="3" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
-
-            <Button Grid.Row="4" Grid.Column="1" Height="26" Width="80" Margin="0,13,6,10">使用说明</Button>
-
-            <Button Grid.Row="4" Grid.Column="2" Height="26" Width="80" Margin="6,13,12,10">应用</Button>
 
         </Grid>
-    </Border>
+
+        <Line Grid.Row="1" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
+
+        <Grid Grid.Row="2" Grid.ColumnSpan="3">
+            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" BorderThickness="0" ItemContainerStyle="{StaticResource CustomListBoxItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+
+            </ListBox>
+        </Grid>
+
+        <Line Grid.Row="3" Grid.ColumnSpan="3" Stroke="Gainsboro" X1="0" Y1="0" X2="648" Y2="1"></Line>
+
+        <Button Grid.Row="4" Grid.Column="1" Height="26" Width="80" Margin="0,13,6,10">使用说明</Button>
+
+        <Button Grid.Row="4" Grid.Column="2" Height="26" Width="80" Margin="6,13,12,10">应用</Button>
+
+    </Grid>
 </Window>
