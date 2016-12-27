@@ -11,7 +11,7 @@
             <Setter.Value>
                 <ControlTemplate>
                     <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto" >
-                        <ItemsPresenter ></ItemsPresenter>
+                        <ItemsPresenter />
                     </ScrollViewer>
                 </ControlTemplate>
             </Setter.Value>
@@ -38,11 +38,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                    <Border BorderThickness="2" Name="OutsideBorder" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                        <Border BorderThickness="0" Margin="4" Name="InsideBorder">
-                            <ContentPresenter />
+                    <Grid >
+                        <Border BorderThickness="2" Name="OutsideBorder" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
+                            <Border BorderThickness="0" Margin="4" Name="InsideBorder">
+                                <ContentPresenter />
+                            </Border>
                         </Border>
-                    </Border>
+                        <Border  Height="25" Width="25" Visibility="Hidden" Margin="159,75,20,20" Background="DeepSkyBlue" Name="CheckBorder">
+                            
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="OutsideBorder" Property="BorderBrush" 
@@ -50,7 +55,9 @@
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="OutsideBorder" Property="Background" 
-                                    Value="{StaticResource SelectedBorderBackground}"></Setter>
+                                    Value="{StaticResource SelectedBorderBackground}" />
+                            <Setter TargetName="CheckBorder" Property="Visibility"
+                                    Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
