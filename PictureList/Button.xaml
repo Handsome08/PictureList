@@ -2,15 +2,15 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PictureList"
                     x:Class="PictureList.Button">
-    <Style x:Key="ButtonY">
-        <Setter Property="Button.Background" Value="Gainsboro"/>
-        <Setter Property="Button.Foreground" Value="#808080"/>
-        <Setter Property="Button.Width" Value="36" />
-        <Setter Property="Button.Height" Value="29"></Setter>
-        <Setter Property="Button.Content" Value="x"></Setter>
-        <Setter Property="Button.VerticalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Button.HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Button.Template">
+    <Style x:Key="CloseButtonStyle" TargetType="Button">
+        <Setter Property="Background" Value="Gainsboro"/>
+        <Setter Property="Foreground" Value="#808080"/>
+        <Setter Property="Width" Value="36" />
+        <Setter Property="Height" Value="29"></Setter>
+        <Setter Property="Content" Value="x"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border BorderThickness="0" CornerRadius="0" Background="{TemplateBinding Background}" >
@@ -22,19 +22,19 @@
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger Property="Control.IsMouseOver" Value="True">
-                <Setter Property="Control.Background" Value="#cc5252"/>
-                <Setter Property="Control.Foreground" Value="White" />
+            <Trigger Property="Button.IsMouseOver" Value="True">
+                <Setter Property="Button.Background" Value="#cc5252"/>
+                <Setter Property="Button.Foreground" Value="White" />
             </Trigger>
             <Trigger Property="Button.IsPressed" Value="True">
-                <Setter Property="Control.Background" Value="#b34747" />
-                <Setter Property="Control.Foreground" Value="White" />
-                <Setter Property="Control.Opacity" Value="60" />
+                <Setter Property="Button.Background" Value="#b34747" />
+                <Setter Property="Button.Foreground" Value="White" />
+                <Setter Property="Button.Opacity" Value="60" />
             </Trigger>
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="Button" x:Key="ButtonZ">
+    <Style TargetType="Button" x:Key="ApplyButtonStyle">
         <Setter Property="Foreground" Value="#ffffff"/>
         <Setter Property="Background" Value="#65ad57" />
         <Setter Property="Width" Value="80" />
