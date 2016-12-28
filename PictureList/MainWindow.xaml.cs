@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +28,18 @@ namespace PictureList
             window.MouseLeftButtonDown += Window_MouseLeftButtonDown;
             window.MouseMove += Window_MouseMove;
             window.MouseLeftButtonUp += Window_MouseLeftButtonUp;
-
-            List<Image> lstImage = new List<Image>();
+            window.Loaded += Window_Loaded;
            
-            lstImage = ImageFactory.LoadImages();
+            lstObject = ImageFactory.LoadImages();
 
-            Listbox.ItemsSource = lstImage;
+            lstObject.Add(addButton);
+
+            Listbox.ItemsSource = lstObject;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            addButton.Style = (Style)this.FindResource("AddButton");
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -69,6 +76,8 @@ namespace PictureList
             this.Close();
         }
 
+        public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
+        public static ObservableCollection<object> lstObject = new ObservableCollection<object>(); 
         private bool CanWinMove = false;
         Point pos = new Point();
         private double Win_Left,Win_Top;

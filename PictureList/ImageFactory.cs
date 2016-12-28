@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
@@ -19,18 +20,19 @@ namespace PictureList
         }
        
 
-        public static List<Image> LoadImages()
+        public static ObservableCollection<object> LoadImages()
         {
             string[] fileNames = Directory.GetFiles(@"..\..\Pictures");
             string path = Directory.GetCurrentDirectory();
-            List<Image> result = new List<Image>();
+            ObservableCollection<object> result = new ObservableCollection<object>();
             foreach (string fileName in fileNames)
             {
-                Console.WriteLine(fileName.Remove(0,15));
+                //Console.WriteLine(fileName.Remove(0,15));
                 Image tempImage = new Image();
                 tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
                 result.Add(tempImage);
             }
+             
             return result;
         }
 

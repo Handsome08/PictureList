@@ -23,13 +23,17 @@
                 <Label VerticalAlignment="Center" Height="29" FontSize="15">课堂活动</Label>
             </StackPanel>
             <Button  Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" 
-                         FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick"/>
+                     FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick"/>
 
         </Grid>
 
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3">
-            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ItemContainerStyle="{StaticResource CustomListBoxItem}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
-
+            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <ListBox.ItemContainerStyleSelector>
+                    <local:ListBoxItemContainerTemplateSelector
+                        ButtonTemplate="{StaticResource ButtonItem}"
+                        ImageTemplate="{StaticResource ImageItem}" />
+                </ListBox.ItemContainerStyleSelector>
             </ListBox>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">

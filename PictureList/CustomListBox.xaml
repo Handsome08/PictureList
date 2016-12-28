@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:PictureList"
                    x:Class="PictureList.CusntomListBox">
-    
+
     <SolidColorBrush Color="#b5d9ad" x:Key="HoverBorderBrush"></SolidColorBrush>
     <SolidColorBrush Color="#c9e6c3" x:Key="SelectedBorderBackground"></SolidColorBrush>
 
@@ -29,12 +29,12 @@
     </Style>
 
 
-    <Style TargetType="ListBoxItem" x:Key="CustomListBoxItem">
+    <Style TargetType="ListBoxItem" x:Key="ImageItem">
         <Setter Property="Height" Value="120" />
-            <Setter Property="Width" Value="204" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="6,3,0,3"></Setter>
+        <Setter Property="Width" Value="204" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="6,3,0,3"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -44,9 +44,10 @@
                                 <ContentPresenter />
                             </Border>
                         </Border>
-                        <Border  Height="25" Width="25" Visibility="Hidden" Margin="159,75,20,20" Background="DeepSkyBlue" Name="CheckBorder">
-                            
-                        </Border>
+                        <!--选中时显示地方块，默认为hidden-->
+                        <Rectangle  Height="25" Width="25" Visibility="Hidden" Margin="159,75,20,20" Fill="DeepSkyBlue" Name="CheckRectangle">
+
+                        </Rectangle>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -56,7 +57,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="OutsideBorder" Property="Background" 
                                     Value="{StaticResource SelectedBorderBackground}" />
-                            <Setter TargetName="CheckBorder" Property="Visibility"
+                            <Setter TargetName="CheckRectangle" Property="Visibility"
                                     Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -65,39 +66,28 @@
         </Setter>
     </Style>
 
-    
+    <Style TargetType="ListBoxItem" x:Key="ButtonItem">
+        <Setter Property="Height" Value="120" />
+        <Setter Property="Width" Value="204" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="6,3,0,3"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" BorderThickness="0">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter  Property="Foreground" 
+                                    Value="Black" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 </ResourceDictionary>
-
-
-<!--<Setter Property="ItemContainerStyle">
-    <Setter.Value>
-        <Style TargetType="ListBoxItem">
-            <Setter Property="Height" Value="120" />
-            <Setter Property="Width" Value="204" />
-            <Setter Property="VerticalAlignment" Value="Top" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Margin" Value="6,3,0,3"></Setter>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border BorderThickness="2" Name="OutsideBorder" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}">
-                            <Border BorderThickness="0" Margin="4" Name="InsideBorder">
-                                <ContentPresenter />
-                            </Border>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="OutsideBorder" Property="BorderBrush" 
-                                    Value="{StaticResource HoverBorderBrush}" />
-                            </Trigger>
-                            <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="OutsideBorder" Property="Background" 
-                                    Value="{StaticResource SelectedBorderBackground}"></Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Setter.Value>
-</Setter>-->
