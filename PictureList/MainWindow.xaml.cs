@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
 
 namespace PictureList
 {
@@ -30,13 +31,39 @@ namespace PictureList
             TitleBar.MouseLeftButtonUp += TitleBar_MouseLeftButtonUp;
 
             lstPictures = ImageFactory.LoadImages();
-            AddButton.Source = "+";
             lstPictures.Add(AddButton);
 
             Listbox.ItemsSource = lstPictures;
+
+            CommandBinding binding = new CommandBinding(ApplicationCommands.Open);
+            binding.Executed += AddPicture_Executed;
+            binding.CanExecute += BindingOnCanExecute;
+            this.CommandBindings.Add(binding);
+
+            
         }
 
-        
+        private void BindingOnCanExecute(object sender, CanExecuteRoutedEventArgs canExecuteRoutedEventArgs)
+        {
+            canExecuteRoutedEventArgs.CanExecute = CanOpen;
+        }
+
+        private void AddPicture_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"D:\";
+            openFileDialog.Filter = "PNG图片|*.png|JPG图片|*.jpg";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //FileName返回的是文件的绝对路径
+                var length = lstPictures.Count;
+                lstPictures.RemoveAt(length - 1);
+                Picture temPicture = new Picture();
+                temPicture.Source = openFileDialog.FileName;
+                lstPictures.Add(temPicture);
+                lstPictures.Add(AddButton);
+            }
+        }
 
         private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -74,7 +101,13 @@ namespace PictureList
 
         //public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
         private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>(); 
-        private Picture AddButton = new Picture();
+        private Picture AddButton = new Picture("+");
+
+        //控制添加按钮命令是否可用
+        private bool CanOpen = true;
+
+        private RoutedUICommand AddPicture;
+
         //用于移动窗口的变量
         private bool CanWinMove = false;
         Point pos = new Point();

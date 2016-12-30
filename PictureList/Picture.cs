@@ -9,5 +9,11 @@ namespace PictureList
     class Picture
     {
         public string Source { get; set; }
+        public Picture() { }
+
+        public Picture(string str)
+        {
+            this.Source = str;
+        }
     }
 }

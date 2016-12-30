@@ -73,7 +73,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="Gainsboro"></Setter>
         <Setter Property="Background" Value="White"></Setter>
-        <EventSetter Event="Click" Handler="AddButtonOnClick"></EventSetter>
+        <Setter Property="Command" Value="Open"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">

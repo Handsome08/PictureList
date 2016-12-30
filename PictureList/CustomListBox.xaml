@@ -44,8 +44,8 @@
                                 <ContentPresenter />
                             </Border>
                         </Border>
-                        <!--选中时显示地方块，默认为hidden-->
-                        <Rectangle  Height="25" Width="25" Visibility="Hidden" Margin="159,75,20,20" Fill="DeepSkyBlue" Name="CheckRectangle">
+                        <!--选中时显示的圆，默认为hidden-->
+                        <Rectangle RadiusX="20" RadiusY="20"  Visibility="Hidden" Margin="164,80,20,20" Fill="DeepSkyBlue" Name="CheckRectangle">
 
                         </Rectangle>
                     </Grid>
@@ -90,10 +90,10 @@
     </Style>
 
     <DataTemplate x:Key="ImageDataTemplate" DataType="Image">
-        <Image Source="{Binding Path=Source}" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+        <Image Source="{Binding Path=Source}"></Image>
     </DataTemplate>
     
     <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
-        <Button Style="{StaticResource AddButton}"></Button>
+        <Button Style="{StaticResource AddButton}" Command="ApplicationCommands.Open"></Button>
     </DataTemplate>
 </ResourceDictionary>
