@@ -89,5 +89,11 @@
         </Setter>
     </Style>
 
-
+    <DataTemplate x:Key="ImageDataTemplate" DataType="Image">
+        <Image Source="{Binding Path=Source}" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
+        <Button Style="{StaticResource AddButton}"></Button>
+    </DataTemplate>
 </ResourceDictionary>

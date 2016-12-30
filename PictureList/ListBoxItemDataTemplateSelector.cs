@@ -6,18 +6,16 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-
 namespace PictureList
 {
-    class ListBoxItemContainerTemplateSelector : StyleSelector
+    class ListBoxItemDataTemplateSelector : DataTemplateSelector
     {
-        public Style ImageTemplate { get; set; }
-        public Style ButtonTemplate { get; set; }
-
-        public override Style SelectStyle(object item, DependencyObject container)
+        public DataTemplate ImageTemplate { get; set; }
+        public DataTemplate ButtonTemplate { get; set; }
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            Picture temp = (Picture) item;
-            if (temp.Source == "+")
+            Picture temp = (Picture)item;
+            if (temp != null && temp.Source == "+")
             {
                 return ButtonTemplate;
             }
@@ -27,6 +25,4 @@ namespace PictureList
             }
         }
     }
-
-
 }

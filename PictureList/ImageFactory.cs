@@ -7,12 +7,13 @@ using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace PictureList
 {
-    class ImageFactory : INotifyCollectionChanged
+    class ImageFactory
     {
         public ImageFactory()
         {
@@ -20,22 +21,22 @@ namespace PictureList
         }
        
 
-        public static ObservableCollection<object> LoadImages()
+        public static ObservableCollection<Picture> LoadImages()
         {
             string[] fileNames = Directory.GetFiles(@"..\..\Pictures");
-            string path = Directory.GetCurrentDirectory();
-            ObservableCollection<object> result = new ObservableCollection<object>();
+            //string path = Directory.GetCurrentDirectory();
+            ObservableCollection<Picture> result = new ObservableCollection<Picture>();
             foreach (string fileName in fileNames)
             {
                 //Console.WriteLine(fileName.Remove(0,15));
-                Image tempImage = new Image();
-                tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
-                result.Add(tempImage);
+                //Image tempImage = new Image();
+                //tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
+                Picture temPicture = new Picture();
+                temPicture.Source = fileName.Remove(0, 6);
+                result.Add(temPicture);
             }
              
             return result;
         }
-
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
     }
 }

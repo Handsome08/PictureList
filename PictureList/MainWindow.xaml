@@ -18,8 +18,8 @@
             <ColumnDefinition Width="184"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100">
-            <StackPanel  Orientation="Horizontal">
+        <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100" Name="TitleBar">
+            <StackPanel  Orientation="Horizontal" >
                 <Label VerticalAlignment="Center" Height="29" FontSize="15">课堂活动</Label>
             </StackPanel>
             <Button  Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" 
@@ -29,11 +29,18 @@
 
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3">
             <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+                <!--数据容器选择器-->
                 <ListBox.ItemContainerStyleSelector>
                     <local:ListBoxItemContainerTemplateSelector
                         ButtonTemplate="{StaticResource ButtonItem}"
                         ImageTemplate="{StaticResource ImageItem}" />
                 </ListBox.ItemContainerStyleSelector>
+                <!--数据呈现方式选择器-->
+                <ListBox.ItemTemplateSelector>
+                    <local:ListBoxItemDataTemplateSelector 
+                            ButtonTemplate="{StaticResource ButtonDataTemplate}"
+                            ImageTemplate="{StaticResource ImageDataTemplate}"/>
+                </ListBox.ItemTemplateSelector>
             </ListBox>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">

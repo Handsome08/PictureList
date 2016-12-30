@@ -25,39 +25,35 @@ namespace PictureList
         {
             InitializeComponent();
 
-            window.MouseLeftButtonDown += Window_MouseLeftButtonDown;
-            window.MouseMove += Window_MouseMove;
-            window.MouseLeftButtonUp += Window_MouseLeftButtonUp;
-            window.Loaded += Window_Loaded;
-           
-            lstObject = ImageFactory.LoadImages();
+            TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
+            TitleBar.MouseMove += TitleBar_MouseMove;
+            TitleBar.MouseLeftButtonUp += TitleBar_MouseLeftButtonUp;
 
-            lstObject.Add(addButton);
+            lstPictures = ImageFactory.LoadImages();
+            AddButton.Source = "+";
+            lstPictures.Add(AddButton);
 
-            Listbox.ItemsSource = lstObject;
+            Listbox.ItemsSource = lstPictures;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            addButton.Style = (Style)this.FindResource("AddButton");
-        }
+        
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void TitleBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             CanWinMove = true;
             pos = PointToScreen(e.GetPosition(null));
             Win_Left = this.Left;
             Win_Top = this.Top;
-            this.CaptureMouse();
+            TitleBar.CaptureMouse();
         }
 
-        private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void TitleBar_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             CanWinMove = false;
-            this.ReleaseMouseCapture();
+            TitleBar.ReleaseMouseCapture();
         }
 
-        private void Window_MouseMove(object sender, MouseEventArgs e)
+        private void TitleBar_MouseMove(object sender, MouseEventArgs e)
         {
             if (CanWinMove)
             {
@@ -76,8 +72,10 @@ namespace PictureList
             this.Close();
         }
 
-        public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
-        public static ObservableCollection<object> lstObject = new ObservableCollection<object>(); 
+        //public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
+        private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>(); 
+        private Picture AddButton = new Picture();
+        //用于移动窗口的变量
         private bool CanWinMove = false;
         Point pos = new Point();
         private double Win_Left,Win_Top;

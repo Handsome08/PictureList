@@ -19,19 +19,19 @@ namespace PictureList
 
         private void AddButtonOnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"D:\";
-            openFileDialog.Filter = "PNG图片|*.png|JPG图片|*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                //FileName返回的是文件的绝对路径
-                var length = MainWindow.lstObject.Count;
-                MainWindow.lstObject.RemoveAt(length - 1);
-                Image tempImage = new Image();
-                tempImage.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
-                MainWindow.lstObject.Add(tempImage);
-                MainWindow.lstObject.Add(MainWindow.addButton);
-            }
+            //OpenFileDialog openFileDialog = new OpenFileDialog();
+            //openFileDialog.InitialDirectory = @"D:\";
+            //openFileDialog.Filter = "PNG图片|*.png|JPG图片|*.jpg";
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    //FileName返回的是文件的绝对路径
+            //    var length = MainWindow.lstObject.Count;
+            //    MainWindow.lstObject.RemoveAt(length - 1);
+            //    Image tempImage = new Image();
+            //    tempImage.Source = new BitmapImage(new Uri(openFileDialog.FileName, UriKind.Absolute));
+            //    MainWindow.lstObject.Add(tempImage);
+            //    MainWindow.lstObject.Add(MainWindow.addButton);
+            //}
         }
     }
 
