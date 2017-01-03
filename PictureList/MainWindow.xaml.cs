@@ -214,6 +214,7 @@ namespace PictureList
             Picture temp = lstPictures[(index + 1)];
             lstPictures[index + 1] = lstPictures[index];
             lstPictures[index] = temp;
+            Listbox.SelectedItem = Listbox.Items[index+1];
         }
 
         //自定义MoveLeft命令
@@ -234,6 +235,7 @@ namespace PictureList
             Picture temp = lstPictures[(index - 1)];
             lstPictures[index - 1] = lstPictures[index];
             lstPictures[index] = temp;
+            Listbox.SelectedItem = Listbox.Items[index - 1];
         }
     }
 }
