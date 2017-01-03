@@ -95,6 +95,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="FullPicture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -109,6 +113,10 @@
     </None>
     <Compile Include="Button.xaml.cs">
       <DependentUpon>Button.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomCommands.cs" />
+    <Compile Include="FullPicture.xaml.cs">
+      <DependentUpon>FullPicture.xaml</DependentUpon>
     </Compile>
     <Compile Include="ImageFactory.cs" />
     <Compile Include="ListBoxItemContainerTemplateSelector.cs" />
@@ -147,16 +155,19 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Pictures\192_108_image1.png" />
-    <Resource Include="Pictures\images1.jpg" />
-    <Resource Include="Pictures\images2.jpg" />
-    <Resource Include="Pictures\images3.jpg" />
-    <Resource Include="Pictures\images4.jpg" />
-    <Resource Include="Pictures\images5.jpg" />
-    <Resource Include="Pictures\images6.jpg" />
-    <Resource Include="Pictures\images7.jpg" />
+    <Resource Include="Pictures\1920x1080-Computer-HD-Images-hd-desktop-wallpapers-cool-images-amazing-hd-apple-background-wallpapers-windows-colourfull-display-1920x1080 %281%29.jpg" />
+    <Resource Include="Pictures\1920x1080-wallpapers1.jpg" />
+    <Resource Include="Pictures\1920x1080-wallpapers2.jpg" />
+    <Resource Include="Pictures\35122_computer_for_hipsters.jpg" />
+    <Resource Include="Pictures\Aviation-airport-Boeing-737-aircraft_1920x1080.jpg" />
+    <Resource Include="Pictures\cat-wallpaper-31.jpg" />
+    <Resource Include="Pictures\Homepage  Nature and Landscape  Nature HD wallpaper 1920x1080 18.jpg" />
+    <Resource Include="Pictures\Iron-Man-3-movie-2013_1920x1080.jpg" />
+    <Resource Include="Pictures\wyoming_usa_mountain_lake_reflection_106816_1920x1080.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\7a861e45aaba28250047192bfb1f1c92.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

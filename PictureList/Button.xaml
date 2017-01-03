@@ -13,8 +13,9 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border BorderThickness="0" CornerRadius="0" Background="{TemplateBinding Background}" >
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True"  >
+                    <Border BorderThickness="0" CornerRadius="0" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" UseLayoutRounding="True"  >
 
                         </ContentPresenter>
                     </Border>
@@ -35,7 +36,6 @@
     </Style>
 
     <Style TargetType="Button" x:Key="ApplyButtonStyle">
-        <!--<Setter Property="Command" ></Setter>-->
         <Setter Property="Foreground" Value="#ffffff"/>
         <Setter Property="Background" Value="#65ad57" />
         <Setter Property="Width" Value="80" />
@@ -72,8 +72,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Foreground" Value="Gainsboro"></Setter>
-        <Setter Property="Background" Value="White"></Setter>
-        <Setter Property="Command" Value="Open"></Setter>
+        <Setter Property="Background" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -84,6 +83,28 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Foreground" Value="Black"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style TargetType="Button" x:Key="ArrowButton">
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Background" Value="#b5d9ad" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="FontSize" Value="20"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderThickness="0" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="DarkSeaGreen" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

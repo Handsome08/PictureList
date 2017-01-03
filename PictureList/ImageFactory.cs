@@ -25,10 +25,13 @@ namespace PictureList
         {
             string[] fileNames = Directory.GetFiles(@"..\..\Pictures");
             //string path = Directory.GetCurrentDirectory();
+            //Console.WriteLine(path);
             ObservableCollection<Picture> result = new ObservableCollection<Picture>();
             foreach (string fileName in fileNames)
             {
                 //Console.WriteLine(fileName.Remove(0,15));
+                //string temp = path + fileName;
+                //Console.WriteLine(temp);
                 //Image tempImage = new Image();
                 //tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
                 Picture temPicture = new Picture();

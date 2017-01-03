@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureList"
         mc:Ignorable="d"
-        Title="MainWindow" Height="435" Width="665"  Name="window" Style="{StaticResource CustomWindow}" >
-
+        Title="MainWindow" Height="435" Width="665" Style="{StaticResource MainWindowStyle}" >
+  
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -20,7 +20,7 @@
 
         <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100" Name="TitleBar">
             <StackPanel  Orientation="Horizontal" >
-                <Label VerticalAlignment="Center" Height="29" FontSize="15">课堂活动</Label>
+                <Label VerticalAlignment="Center" Height="29" FontSize="15">图片浏览器</Label>
             </StackPanel>
             <Button  Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" 
                      FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick"/>
@@ -28,7 +28,7 @@
         </Grid>
 
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3">
-            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" >
+            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <!--数据容器选择器-->
                 <ListBox.ItemContainerStyleSelector>
                     <local:ListBoxItemContainerTemplateSelector
@@ -43,8 +43,8 @@
                 </ListBox.ItemTemplateSelector>
             </ListBox>
         </Border>
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-            <Button  Height="26" Width="80" Margin="0,13,6,10">
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
+            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="local:CustomCommands.Delete">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="White" />
@@ -54,7 +54,7 @@
                             <Setter.Value>
                                 <ControlTemplate>
                                     <Border BorderThickness="1" BorderBrush="Gainsboro" Background="{TemplateBinding Background}">
-                                        <ContentPresenter Content="使用说明" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                        <ContentPresenter Content="删除" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -70,7 +70,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Style="{StaticResource ApplyButtonStyle}" Margin="6,13,12,10">应用</Button>
+            <Button Style="{StaticResource ApplyButtonStyle}" Margin="6,13,12,10" Command="local:CustomCommands.Zoom">应用</Button>
         </StackPanel>
         
         

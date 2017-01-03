@@ -44,10 +44,12 @@
                                 <ContentPresenter />
                             </Border>
                         </Border>
-                        <!--选中时显示的圆，默认为hidden-->
-                        <Rectangle RadiusX="20" RadiusY="20"  Visibility="Hidden" Margin="164,80,20,20" Fill="DeepSkyBlue" Name="CheckRectangle">
-
-                        </Rectangle>
+                        <!--选中时显示的圆，默认为hidden,选中时显示-->
+                        <Rectangle RadiusX="20" RadiusY="20"  Visibility="Hidden" Margin="164,80,20,20" Fill="#FF20B011" Name="CheckRectangle" />
+                        <Button Style="{StaticResource ArrowButton}" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Visibility="Hidden" Content="&lt;" Name="LeftArrowButton" Margin="6,0,0,0" Command="local:CustomCommands.MoveLeft"/>
+                        <Button Style="{StaticResource ArrowButton}" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    Visibility="Hidden" Content="&gt;" Name="RightArrowButton" Margin="0,0,6,0" Command="local:CustomCommands.MoveRight"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -59,6 +61,8 @@
                                     Value="{StaticResource SelectedBorderBackground}" />
                             <Setter TargetName="CheckRectangle" Property="Visibility"
                                     Value="Visible" />
+                            <Setter TargetName="LeftArrowButton" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="RightArrowButton" Property="Visibility" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -90,10 +94,14 @@
     </Style>
 
     <DataTemplate x:Key="ImageDataTemplate" DataType="Image">
-        <Image Source="{Binding Path=Source}"></Image>
+        <Image Source="{Binding Path=Source}">
+            <Image.CommandBindings>
+                <CommandBinding Command="local:CustomCommands.Zoom" />
+            </Image.CommandBindings>
+        </Image>
     </DataTemplate>
     
     <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
-        <Button Style="{StaticResource AddButton}" Command="ApplicationCommands.Open"></Button>
+        <Button Style="{StaticResource AddButton}" Command="local:CustomCommands.Add"></Button>
     </DataTemplate>
 </ResourceDictionary>
