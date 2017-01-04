@@ -44,7 +44,7 @@
             </ListBox>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
-            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="local:CustomCommands.Delete">
+            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="{Binding Path=DeleteCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="White" />

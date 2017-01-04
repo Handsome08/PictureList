@@ -30,18 +30,22 @@ namespace PictureList
             TitleBar.MouseMove += TitleBar_MouseMove;
             TitleBar.MouseLeftButtonUp += TitleBar_MouseLeftButtonUp;
 
-            lstPictures = ImageFactory.LoadImages();
-            lstPictures.Add(AddButton);
+            ImageFactory imageFactory = new ImageFactory();
+
+            lstPictures = imageFactory.LstPictures;
+            //lstPictures.Add(AddButton);
+
+            this.DataContext = lstPictures;
 
             Listbox.ItemsSource = lstPictures;
 
-            //添加自定义命令的绑定
-            CommandBinding bindingAdd = new CommandBinding(CustomCommands.Add);
-            bindingAdd.Executed += AddPicture_Executed;
+            ////添加自定义命令的绑定
+            //CommandBinding bindingAdd = new CommandBinding(CustomCommands.Add);
+            //bindingAdd.Executed += AddPicture_Executed;
 
-            CommandBinding bindingDelete = new CommandBinding(CustomCommands.Delete);
-            bindingDelete.Executed += DeleteCommand_Excuted;
-            bindingDelete.CanExecute += DeleteCommand_CanExcute;
+            //CommandBinding bindingDelete = new CommandBinding(CustomCommands.Delete);
+            //bindingDelete.Executed += DeleteCommand_Excuted;
+            //bindingDelete.CanExecute += DeleteCommand_CanExcute;
 
             CommandBinding bindingZoom = new CommandBinding(CustomCommands.Zoom);
             bindingZoom.Executed += BindingZoom_Executed;
@@ -55,8 +59,8 @@ namespace PictureList
             bindingMoveRight.Executed += BindingMoveRight_Executed;
             bindingMoveRight.CanExecute += BindingMoveRight_CanExecute;
 
-            this.CommandBindings.Add(bindingAdd);
-            this.CommandBindings.Add(bindingDelete);
+            //this.CommandBindings.Add(bindingAdd);
+            //this.CommandBindings.Add(bindingDelete);
             this.CommandBindings.Add(bindingZoom);
             this.CommandBindings.Add(bindingMoveLeft);
             this.CommandBindings.Add(bindingMoveRight);
@@ -106,67 +110,47 @@ namespace PictureList
 
         //public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
 
-        private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>(); 
-        private Picture AddButton = new Picture("+");
+        private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
+        //private Picture AddButton = new Picture("+");
 
-       
-
-        private void ApplyButtonOnClick(object sender, RoutedEventArgs e)
-        {
-            ShowFullPictureWindow();
-        }
-
-
-        //打开大图
-        private void ShowFullPictureWindow()
-        {
-            Window win = new Window();
-            win.Style = (Style)this.FindResource("FullPictureWindowStyle");
-            Image image = new Image();
-            Binding binding = new Binding("Source");
-            binding.Source = Listbox.SelectedItem;
-            image.SetBinding(Image.SourceProperty, binding);
-            win.Content = image;
-            win.Show();
-        }
 
         //自定义Delete命令
-        private void DeleteCommand_Excuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            int index = Listbox.SelectedIndex;
-            lstPictures.RemoveAt(index);
-        }
-        
+        //    private void DeleteCommand_Excuted(object sender, ExecutedRoutedEventArgs e)
+        //    {
+        //        int index = Listbox.SelectedIndex;
+        //        lstPictures.RemoveAt(index);
+        //    }
 
-        private void DeleteCommand_CanExcute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (Listbox.SelectedItem == null)
-            {
-                e.CanExecute = false;
-            }
-            else
-            {
-                e.CanExecute = true;
-            }
-        }
 
-        //自定义Add命令
-        private void AddPicture_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"D:\";
-            openFileDialog.Filter = "PNG图片|*.png|JPG图片|*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                //FileName返回的是文件的绝对路径
-                var length = lstPictures.Count;
-                lstPictures.RemoveAt(length - 1);
-                Picture temPicture = new Picture();
-                temPicture.Source = openFileDialog.FileName;
-                lstPictures.Add(temPicture);
-                lstPictures.Add(AddButton);
-            }
-        }
+        //    private void DeleteCommand_CanExcute(object sender, CanExecuteRoutedEventArgs e)
+        //    {
+        //        if (Listbox.SelectedItem == null)
+        //        {
+        //            e.CanExecute = false;
+        //        }
+        //        else
+        //        {
+        //            e.CanExecute = true;
+        //        }
+        //    }
+
+        //    //自定义Add命令
+        //    private void AddPicture_Executed(object sender, ExecutedRoutedEventArgs e)
+        //    {
+        //        OpenFileDialog openFileDialog = new OpenFileDialog();
+        //        openFileDialog.InitialDirectory = @"D:\";
+        //        openFileDialog.Filter = "PNG图片|*.png|JPG图片|*.jpg";
+        //        if (openFileDialog.ShowDialog() == true)
+        //        {
+        //            //FileName返回的是文件的绝对路径
+        //            var length = lstPictures.Count;
+        //            lstPictures.RemoveAt(length - 1);
+        //            Picture temPicture = new Picture();
+        //            temPicture.Source = openFileDialog.FileName;
+        //            lstPictures.Add(temPicture);
+        //            lstPictures.Add(ImageFactory.AddButton);
+        //        }
+        //    }
         //自定义Zoom命令
         private void BindingZoom_Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
@@ -179,7 +163,7 @@ namespace PictureList
             //win.Content = image;
             //win.Show();
 
-            FullPicture fullPicture = new FullPicture();
+            var fullPicture = new FullPicture();
             fullPicture.DataContext = Listbox.SelectedItem;
             fullPicture.Show();
         }
@@ -214,7 +198,7 @@ namespace PictureList
             Picture temp = lstPictures[(index + 1)];
             lstPictures[index + 1] = lstPictures[index];
             lstPictures[index] = temp;
-            Listbox.SelectedItem = Listbox.Items[index+1];
+            Listbox.SelectedItem = Listbox.Items[index + 1];
         }
 
         //自定义MoveLeft命令

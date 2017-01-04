@@ -32,9 +32,10 @@ namespace PictureList
         }
         
         private static RoutedUICommand delete;
-        private static RoutedUICommand add;
         private static RoutedUICommand zoom;
         private static RoutedUICommand close;
+
+        private static RoutedUICommand add;
         private static RoutedUICommand moveleft;
         private static RoutedUICommand moveright;
 

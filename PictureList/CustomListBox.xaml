@@ -102,6 +102,6 @@
     </DataTemplate>
     
     <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
-        <Button Style="{StaticResource AddButton}" Command="local:CustomCommands.Add"></Button>
+        <Button Style="{StaticResource AddButton}" Command="{Binding Path=AddCommand}"></Button>
     </DataTemplate>
 </ResourceDictionary>
