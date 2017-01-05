@@ -4,18 +4,31 @@ using System.Linq;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace PictureList
 {
-    class DelegateCommand : ICommand
+    public class DelegateCommand : ICommand
     {
-        public Action<object> ExcutedCommand = null;
+        private Action<object> ExcutedCommand = null;
 
-        public Func<object,bool> CanExcuteCommand = null;
+        private Func<object,bool> CanExcuteCommand = null;
 
-        public event EventHandler CanExecuteChanged;
+        //实现才可以在值变化时触发CanExcuteCommand
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
 
+        public DelegateCommand(Action<object> excute, Func<object, bool> canexcute)
+        {
+            ExcutedCommand = excute;
+            CanExcuteCommand = canexcute;
+        } 
+        
+        
         public bool CanExecute(object parameter)
         {
             if (CanExcuteCommand != null)
@@ -36,13 +49,7 @@ namespace PictureList
             }
         }
 
-        public void RaiseCanExecuteChanged()
-        {
-            if (CanExecuteChanged != null)
-            {
-                CanExecuteChanged(this, EventArgs.Empty);
-            }
-        }
+
     }
 
 

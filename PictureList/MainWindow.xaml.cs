@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,14 +31,13 @@ namespace PictureList
             TitleBar.MouseMove += TitleBar_MouseMove;
             TitleBar.MouseLeftButtonUp += TitleBar_MouseLeftButtonUp;
 
-            ImageFactory imageFactory = new ImageFactory();
-
-            lstPictures = imageFactory.LstPictures;
+            
+            
             //lstPictures.Add(AddButton);
+            PictureListViewModel pictureListViewModel = new PictureListViewModel();
+            DataContext = pictureListViewModel;
 
-            this.DataContext = lstPictures;
-
-            Listbox.ItemsSource = lstPictures;
+            //Listbox.ItemsSource = lstPictures;
 
             ////添加自定义命令的绑定
             //CommandBinding bindingAdd = new CommandBinding(CustomCommands.Add);
@@ -47,27 +47,25 @@ namespace PictureList
             //bindingDelete.Executed += DeleteCommand_Excuted;
             //bindingDelete.CanExecute += DeleteCommand_CanExcute;
 
-            CommandBinding bindingZoom = new CommandBinding(CustomCommands.Zoom);
-            bindingZoom.Executed += BindingZoom_Executed;
-            bindingZoom.CanExecute += BindingZoom_CanExecute;
+            //CommandBinding bindingZoom = new CommandBinding(CustomCommands.Zoom);
+            //bindingZoom.Executed += BindingZoom_Executed;
+            //bindingZoom.CanExecute += BindingZoom_CanExecute;
 
-            CommandBinding bindingMoveLeft = new CommandBinding(CustomCommands.MoveLeft);
-            bindingMoveLeft.Executed += BindingMoveLeft_Executed;
-            bindingMoveLeft.CanExecute += BindingMoveLeft_CanExecute;
+            //CommandBinding bindingMoveLeft = new CommandBinding(CustomCommands.MoveLeft);
+            //bindingMoveLeft.Executed += BindingMoveLeft_Executed;
+            //bindingMoveLeft.CanExecute += BindingMoveLeft_CanExecute;
 
-            CommandBinding bindingMoveRight = new CommandBinding(CustomCommands.MoveRight);
-            bindingMoveRight.Executed += BindingMoveRight_Executed;
-            bindingMoveRight.CanExecute += BindingMoveRight_CanExecute;
+            //CommandBinding bindingMoveRight = new CommandBinding(CustomCommands.MoveRight);
+            //bindingMoveRight.Executed += BindingMoveRight_Executed;
+            //bindingMoveRight.CanExecute += BindingMoveRight_CanExecute;
 
             //this.CommandBindings.Add(bindingAdd);
             //this.CommandBindings.Add(bindingDelete);
-            this.CommandBindings.Add(bindingZoom);
-            this.CommandBindings.Add(bindingMoveLeft);
-            this.CommandBindings.Add(bindingMoveRight);
+            //this.CommandBindings.Add(bindingZoom);
+            //this.CommandBindings.Add(bindingMoveLeft);
+            //this.CommandBindings.Add(bindingMoveRight);
         }
-
         
-
 
         //用于移动窗口的变量
         private bool CanWinMove = false;
@@ -107,10 +105,11 @@ namespace PictureList
         {
             this.Close();
         }
-
+        
+        
         //public static System.Windows.Controls.Button addButton = new System.Windows.Controls.Button();
 
-        private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
+        //private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
         //private Picture AddButton = new Picture("+");
 
 
@@ -152,74 +151,74 @@ namespace PictureList
         //        }
         //    }
         //自定义Zoom命令
-        private void BindingZoom_Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
-        {
-            //Window win = new Window();
-            //win.Style = (Style)this.FindResource("FullPictureWindowStyle");
-            //Image image = new Image();
-            //Binding binding = new Binding("Source");
-            //binding.Source = Listbox.SelectedItem;
-            //image.SetBinding(Image.SourceProperty, binding);
-            //win.Content = image;
-            //win.Show();
+        //    private void BindingZoom_Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
+        //    {
+        //        //Window win = new Window();
+        //        //win.Style = (Style)this.FindResource("FullPictureWindowStyle");
+        //        //Image image = new Image();
+        //        //Binding binding = new Binding("Source");
+        //        //binding.Source = Listbox.SelectedItem;
+        //        //image.SetBinding(Image.SourceProperty, binding);
+        //        //win.Content = image;
+        //        //win.Show();
 
-            var fullPicture = new FullPicture();
-            fullPicture.DataContext = Listbox.SelectedItem;
-            fullPicture.Show();
-        }
-        private void BindingZoom_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (Listbox.SelectedItem == null)
-            {
-                e.CanExecute = false;
-            }
-            else
-            {
-                e.CanExecute = true;
-            }
-        }
+        //        var fullPicture = new FullPicture();
+        //        fullPicture.DataContext = Listbox.SelectedItem;
+        //        fullPicture.Show();
+        //    }
+        //    private void BindingZoom_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        //    {
+        //        if (Listbox.SelectedItem == null)
+        //        {
+        //            e.CanExecute = false;
+        //        }
+        //        else
+        //        {
+        //            e.CanExecute = true;
+        //        }
+        //    }
 
-        //自定义MoveRight命令
-        private void BindingMoveRight_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (Listbox.SelectedItem != null && Listbox.SelectedIndex == Listbox.Items.Count - 2)
-            {
-                e.CanExecute = false;
-            }
-            else
-            {
-                e.CanExecute = true;
-            }
-        }
+        //    //自定义MoveRight命令
+        //    private void BindingMoveRight_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        //    {
+        //        if (Listbox.SelectedItem != null && Listbox.SelectedIndex == Listbox.Items.Count - 2)
+        //        {
+        //            e.CanExecute = false;
+        //        }
+        //        else
+        //        {
+        //            e.CanExecute = true;
+        //        }
+        //    }
 
-        private void BindingMoveRight_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            int index = Listbox.SelectedIndex;
-            Picture temp = lstPictures[(index + 1)];
-            lstPictures[index + 1] = lstPictures[index];
-            lstPictures[index] = temp;
-            Listbox.SelectedItem = Listbox.Items[index + 1];
-        }
+        //    private void BindingMoveRight_Executed(object sender, ExecutedRoutedEventArgs e)
+        //    {
+        //        int index = Listbox.SelectedIndex;
+        //        Picture temp = lstPictures[(index + 1)];
+        //        lstPictures[index + 1] = lstPictures[index];
+        //        lstPictures[index] = temp;
+        //        Listbox.SelectedItem = Listbox.Items[index + 1];
+        //    }
 
-        //自定义MoveLeft命令
-        private void BindingMoveLeft_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            if (Listbox.SelectedItem != null && Listbox.SelectedIndex == 0)
-            {
-                e.CanExecute = false;
-            }
-            else
-            {
-                e.CanExecute = true;
-            }
-        }
-        private void BindingMoveLeft_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            int index = Listbox.SelectedIndex;
-            Picture temp = lstPictures[(index - 1)];
-            lstPictures[index - 1] = lstPictures[index];
-            lstPictures[index] = temp;
-            Listbox.SelectedItem = Listbox.Items[index - 1];
-        }
+        //    //自定义MoveLeft命令
+        //    private void BindingMoveLeft_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        //    {
+        //        if (Listbox.SelectedItem != null && Listbox.SelectedIndex == 0)
+        //        {
+        //            e.CanExecute = false;
+        //        }
+        //        else
+        //        {
+        //            e.CanExecute = true;
+        //        }
+        //    }
+        //    private void BindingMoveLeft_Executed(object sender, ExecutedRoutedEventArgs e)
+        //    {
+        //        int index = Listbox.SelectedIndex;
+        //        Picture temp = lstPictures[(index - 1)];
+        //        lstPictures[index - 1] = lstPictures[index];
+        //        lstPictures[index] = temp;
+        //        Listbox.SelectedItem = Listbox.Items[index - 1];
+        //    }
     }
 }

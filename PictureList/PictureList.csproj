@@ -130,6 +130,7 @@
       <DependentUpon>Button.xaml</DependentUpon>
     </Compile>
     <Compile Include="CustomCommands.cs" />
+    <Compile Include="DataContextConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="FullPicture.xaml.cs">
       <DependentUpon>FullPicture.xaml</DependentUpon>
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Picture.cs" />
+    <Compile Include="PictureListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

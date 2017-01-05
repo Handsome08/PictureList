@@ -15,5 +15,6 @@ namespace PictureList
         {
             this.Source = str;
         }
+        
     }
 }

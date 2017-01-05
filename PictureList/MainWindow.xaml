@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PictureList"
         mc:Ignorable="d"
         Title="MainWindow" Height="435" Width="665" Style="{StaticResource MainWindowStyle}" >
-  
+
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -23,12 +23,14 @@
                 <Label VerticalAlignment="Center" Height="29" FontSize="15">图片浏览器</Label>
             </StackPanel>
             <Button  Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" 
-                     FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick"/>
+                     FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick" />
 
         </Grid>
 
-        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3">
-            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3" Name="ListBoxBorder">
+            <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" SelectedIndex="{Binding Path=SelectedIndex,Mode=OneWayToSource}" 
+                     SelectedItem="{Binding Path=SelectedItem,Mode=OneWayToSource}" ItemsSource="{Binding Path=LstPictures}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <!--数据容器选择器-->
                 <ListBox.ItemContainerStyleSelector>
                     <local:ListBoxItemContainerTemplateSelector
@@ -44,7 +46,7 @@
             </ListBox>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
-            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="{Binding Path=DeleteCommand}">
+            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="{Binding DeleteCommand}">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="White" />
@@ -70,7 +72,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button Style="{StaticResource ApplyButtonStyle}" Margin="6,13,12,10" Command="local:CustomCommands.Zoom">应用</Button>
+            <Button Style="{StaticResource ApplyButtonStyle}" Margin="6,13,12,10" Command="{Binding Path=ZoomCommand}">应用</Button>
         </StackPanel>
         
         
