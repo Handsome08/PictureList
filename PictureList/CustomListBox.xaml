@@ -108,7 +108,8 @@
     </DataTemplate>
     
     <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
-        <Button Style="{StaticResource AddButton}">
+        <Button Style="{StaticResource AddButton}" Command="{Binding Path=DataContext,Converter={StaticResource DataContextConverter},ConverterParameter=AddCommand,
+                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:MainWindow}}">
         </Button>
     </DataTemplate>
 </ResourceDictionary>

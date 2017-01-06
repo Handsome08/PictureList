@@ -15,13 +15,26 @@ namespace PictureList
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             PictureListViewModel pictureListViewModel = (PictureListViewModel)value;
-            if (parameter != null && parameter.ToString() == "MoveLeftCommand")
+            if (parameter != null)
             {
-                
-                return pictureListViewModel.MoveLeftCommand;
+                switch (parameter.ToString())
+                {
+                    case "MoveLeftCommand":
+                        return pictureListViewModel.MoveLeftCommand;
+                        
+                    case "MoveRightCommand":
+                        return pictureListViewModel.MoveRightCommand;
+
+                    case "AddCommand":
+                        return pictureListViewModel.AddCommand;
+
+                    default:
+                        return null;
+
+                }
             }
-            Console.WriteLine(parameter.ToString());
-            return pictureListViewModel.MoveRightCommand;
+            return null;
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

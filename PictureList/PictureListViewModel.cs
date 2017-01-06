@@ -38,13 +38,13 @@ namespace PictureList
             moveRight = new DelegateCommand(MoveRightExcuted, MoveRightCanExcuteCommand);
         }
 
-        private void DeleteExcuted(object o)
+        private void DeleteExcuted(object obj)
         {
             //int index = selectedIndex;
             lstPictures.RemoveAt(SelectedIndex);
         }
 
-        private bool DeleteCanExcuteCommand(object o)
+        private bool DeleteCanExcuteCommand(object obj)
         {
             if (SelectedItem != null)
             {
@@ -53,23 +53,29 @@ namespace PictureList
 
             return false;
         }
-        //obj是ListBoxItem对象
+        //obj是ListBoxItem对象,通过CommandParameter传入
         private void MoveRightExcuted(object obj)
         {
-            int index = SelectedIndex;
+            Picture tempItem = (Picture)SelectedItem;
+
+            int index = GetIndex((ListBoxItem)obj);
             Picture temp = lstPictures[(index + 1)];
             lstPictures[index + 1] = lstPictures[index];
             lstPictures[index] = temp;
-            //SelectedItem = Listbox.Items[index + 1];
-        }
 
-        private bool MoveRightCanExcuteCommand(object arg)
+            SelectedItem = tempItem;
+        }
+        //obj是ListBoxItem对象,通过CommandParameter传入
+        private bool MoveRightCanExcuteCommand(object obj)
         {
-            if (arg is ListBoxItem)
+            
+            int tempIndex = -1;
+
+            if (obj is ListBoxItem)
             {
-                (arg as ListBoxItem).IsSelected = true;
+                tempIndex = GetIndex((ListBoxItem)obj);
             }
-            if (SelectedItem != null && SelectedIndex == lstPictures.Count - 2)
+            if (tempIndex == LstPictures.Count-2)
             {
                 return false;
             }
@@ -78,22 +84,29 @@ namespace PictureList
                 return true;
             }
         }
-
+        //obj是ListBoxItem对象,通过CommandParameter传入
         private void MoveLeftExcuted(object obj)
         {
-            int index = SelectedIndex;
+            Picture tempItem = (Picture)SelectedItem;
+
+            int index = GetIndex((ListBoxItem)obj);
             Picture temp = lstPictures[(index - 1)];
             lstPictures[index - 1] = lstPictures[index];
             lstPictures[index] = temp;
-        }
 
-        private bool MoveLeftCanExcuteCommand(object arg)
+            SelectedItem = tempItem;
+        }
+        //obj是ListBoxItem对象,通过CommandParameter传入
+        private bool MoveLeftCanExcuteCommand(object obj)
         {
-            if (arg is ListBoxItem)
+             
+            int tempIndex = -1; 
+            
+            if (obj is ListBoxItem)
             {
-                (arg as ListBoxItem).IsSelected = true;
+                tempIndex =  GetIndex((ListBoxItem)obj);
             }
-            if (SelectedItem != null && SelectedIndex == 0)
+            if (tempIndex == 0)
             {
                 return false;
             }
@@ -101,6 +114,24 @@ namespace PictureList
             {
                 return true;
             }
+        }
+
+        //获取传入的ListBoxItem中Picture在LstPictures中的index
+        private int GetIndex(ListBoxItem listBoxItem)
+        {
+            Picture tempItem;
+            if (listBoxItem.Content is Picture)
+            {
+                tempItem = (Picture)listBoxItem.Content;
+                for (var i = 0; i < LstPictures.Count - 1; i++)
+                {
+                    if (tempItem == LstPictures[i])
+                    {
+                        return i;
+                    }
+                }
+            }
+            return -1;
         }
 
         private void ZoomExcuted(object obj)
@@ -110,7 +141,7 @@ namespace PictureList
             fullPicture.Show();
         }
 
-        private bool ZoomCanExcuteCommand(object arg)
+        private bool ZoomCanExcuteCommand(object obj)
         {
             if (SelectedItem != null)
             {
@@ -119,6 +150,24 @@ namespace PictureList
 
             return false;
         }
+
+        private void AddExcuted(object obj)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.InitialDirectory = @"D:\";
+            openFileDialog.Filter = "图片|*.png;*.jpg";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                //FileName返回的是文件的绝对路径
+                var length = lstPictures.Count;
+                lstPictures.RemoveAt(length - 1);
+                Picture temPicture = new Picture();
+                temPicture.Source = openFileDialog.FileName;
+                lstPictures.Add(temPicture);
+                lstPictures.Add(AddButton);
+            }
+        }
+
 
         //命令和绑定数据
         private object selectedItem;
@@ -131,6 +180,7 @@ namespace PictureList
 
 
         //绑定界面的选择项
+        //SeletedItem并不是ListBoxItem，而是ListBoxItem中存放的数据的类型，在本实例中为Picture
         public object SelectedItem
         {
             get { return selectedItem; }
@@ -177,25 +227,6 @@ namespace PictureList
         }
 
         
-
-        private void AddExcuted(object obj)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.InitialDirectory = @"D:\";
-            openFileDialog.Filter = "图片|*.png,*.jpg";
-            if (openFileDialog.ShowDialog() == true)
-            {
-                //FileName返回的是文件的绝对路径
-                var length = lstPictures.Count;
-                lstPictures.RemoveAt(length - 1);
-                Picture temPicture = new Picture();
-                temPicture.Source = openFileDialog.FileName;
-                lstPictures.Add(temPicture);
-                lstPictures.Add(AddButton);
-            }
-        }
-
-
         
         private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
         public ObservableCollection<Picture> LstPictures
