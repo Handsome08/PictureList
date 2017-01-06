@@ -8,12 +8,17 @@ namespace PictureList
 {
     class Picture
     {
+        //大图路径
         public string Source { get; set; }
+        //缩略图路径
+        public string ThumbPath { get; set; }
         public Picture() { }
 
-        public Picture(string str)
+        //用于初始化添加按钮"+"
+        public Picture(string path1,string path2)
         {
-            this.Source = str;
+            this.Source = path1;
+            this.ThumbPath = path2;
         }
         
     }

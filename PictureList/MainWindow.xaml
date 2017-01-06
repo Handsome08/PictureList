@@ -29,8 +29,8 @@
 
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3" Name="ListBoxBorder">
             <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" SelectedIndex="{Binding Path=SelectedIndex,Mode=OneWayToSource}" 
-                     SelectedItem="{Binding Path=SelectedItem,Mode=TwoWay}" ItemsSource="{Binding Path=LstPictures}" 
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                     ItemsSource="{Binding Path=LstPictures}" SelectionMode="Multiple" SelectedItem="{Binding Path=SelectedItem}"
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" local:CustomSelectedItems.SelectedItems="{Binding Path=SelectedItems}">
                 <!--数据容器选择器-->
                 <ListBox.ItemContainerStyleSelector>
                     <local:ListBoxItemContainerTemplateSelector

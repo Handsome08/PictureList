@@ -6,6 +6,7 @@
                     x:Class="PictureList.CusntomListBox">
 
     <local:DataContextConverter x:Key="DataContextConverter"></local:DataContextConverter>
+    <local:ImageSourceConverter x:Key="ImageSourceConverter"></local:ImageSourceConverter>
     <SolidColorBrush Color="#b5d9ad" x:Key="HoverBorderBrush"></SolidColorBrush>
     <SolidColorBrush Color="#c9e6c3" x:Key="SelectedBorderBackground"></SolidColorBrush>
 
@@ -52,13 +53,13 @@
                         <Button Style="{StaticResource ArrowButton}" HorizontalAlignment="Left" VerticalAlignment="Center"
                                     Visibility="Hidden" Content="&lt;" Name="LeftArrowButton" Margin="6,0,0,0"
                                 Command="{Binding Path=DataContext,Converter={StaticResource DataContextConverter},ConverterParameter=MoveLeftCommand,
-                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:MainWindow}}"  
-                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem}}"/>
+                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"  
+                                CommandParameter="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"/>
                         <Button Style="{StaticResource ArrowButton}" HorizontalAlignment="Right" VerticalAlignment="Center"
                                     Visibility="Hidden" Content="&gt;" Name="RightArrowButton" Margin="0,0,6,0"
                                 Command="{Binding Path=DataContext,Converter={StaticResource DataContextConverter},ConverterParameter=MoveRightCommand,
-                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:MainWindow}}"
-                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBoxItem}}"/>
+                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}"
+                                CommandParameter="{Binding DataContext,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -102,14 +103,14 @@
         </Setter>
     </Style>
 
-    <DataTemplate x:Key="ImageDataTemplate" DataType="Image">
-        <Image Source="{Binding Path=Source}">
+    <DataTemplate x:Key="ImageDataTemplate" DataType="local:Picture">
+        <Image Source="{Binding ThumbPath,Converter={StaticResource ImageSourceConverter}}">
         </Image>
     </DataTemplate>
     
     <DataTemplate x:Key="ButtonDataTemplate" DataType="Button">
         <Button Style="{StaticResource AddButton}" Command="{Binding Path=DataContext,Converter={StaticResource DataContextConverter},ConverterParameter=AddCommand,
-                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:MainWindow}}">
+                            RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ListBox}}">
         </Button>
     </DataTemplate>
 </ResourceDictionary>

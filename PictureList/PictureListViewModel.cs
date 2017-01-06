@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -41,7 +42,11 @@ namespace PictureList
         private void DeleteExcuted(object obj)
         {
             //int index = selectedIndex;
-            lstPictures.RemoveAt(SelectedIndex);
+            while (selectedItem != null)
+            {
+                lstPictures.RemoveAt(SelectedIndex);
+            }
+            
         }
 
         private bool DeleteCanExcuteCommand(object obj)
@@ -56,25 +61,27 @@ namespace PictureList
         //obj是ListBoxItem对象,通过CommandParameter传入
         private void MoveRightExcuted(object obj)
         {
-            Picture tempItem = (Picture)SelectedItem;
-
-            int index = GetIndex((ListBoxItem)obj);
+            //Picture tempItem = (Picture)SelectedItem;
+            
+            int index = GetIndex((Picture)obj);
             Picture temp = lstPictures[(index + 1)];
             lstPictures[index + 1] = lstPictures[index];
             lstPictures[index] = temp;
 
-            SelectedItem = tempItem;
+            //SelectedItem = tempItem;
         }
         //obj是ListBoxItem对象,通过CommandParameter传入
         private bool MoveRightCanExcuteCommand(object obj)
         {
             
             int tempIndex = -1;
-
-            if (obj is ListBoxItem)
+            
+            var picture = obj as Picture;
+            if (picture != null)
             {
-                tempIndex = GetIndex((ListBoxItem)obj);
+                tempIndex = GetIndex(picture);
             }
+
             if (tempIndex == LstPictures.Count-2)
             {
                 return false;
@@ -87,25 +94,37 @@ namespace PictureList
         //obj是ListBoxItem对象,通过CommandParameter传入
         private void MoveLeftExcuted(object obj)
         {
-            Picture tempItem = (Picture)SelectedItem;
-
-            int index = GetIndex((ListBoxItem)obj);
+            //Picture tempItem = (Picture)SelectedItem;
+            IList tempItems = null;
+            //if (obj is ListBoxItem)
+            //{
+            //    var listBoxItem = obj as ListBoxItem;
+            //    var listBox = listBoxItem.Parent as ListBox;
+            //    if (listBox != null)
+            //    {
+            //        tempItems = listBox.SelectedItems;
+            //    }
+            //}
+            int index = GetIndex((Picture)obj);
             Picture temp = lstPictures[(index - 1)];
             lstPictures[index - 1] = lstPictures[index];
             lstPictures[index] = temp;
 
-            SelectedItem = tempItem;
+            SelectedItems = tempItems;
+            //SelectedItem = tempItem;
         }
         //obj是ListBoxItem对象,通过CommandParameter传入
         private bool MoveLeftCanExcuteCommand(object obj)
         {
              
-            int tempIndex = -1; 
-            
-            if (obj is ListBoxItem)
+            int tempIndex = -1;
+
+            var picture = obj as Picture;
+            if (picture != null)
             {
-                tempIndex =  GetIndex((ListBoxItem)obj);
+                tempIndex = GetIndex(picture);
             }
+          
             if (tempIndex == 0)
             {
                 return false;
@@ -117,22 +136,19 @@ namespace PictureList
         }
 
         //获取传入的ListBoxItem中Picture在LstPictures中的index
-        private int GetIndex(ListBoxItem listBoxItem)
+        private int GetIndex(Picture picture)
         {
-            Picture tempItem;
-            if (listBoxItem.Content is Picture)
+            for (var i = 0; i < LstPictures.Count - 1; i++)
             {
-                tempItem = (Picture)listBoxItem.Content;
-                for (var i = 0; i < LstPictures.Count - 1; i++)
+                if (picture == LstPictures[i])
                 {
-                    if (tempItem == LstPictures[i])
-                    {
-                        return i;
-                    }
+                    return i;
                 }
             }
+            
             return -1;
         }
+        
 
         private void ZoomExcuted(object obj)
         {
@@ -154,6 +170,7 @@ namespace PictureList
         private void AddExcuted(object obj)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = @"D:\";
             openFileDialog.Filter = "图片|*.png;*.jpg";
             if (openFileDialog.ShowDialog() == true)
@@ -161,9 +178,13 @@ namespace PictureList
                 //FileName返回的是文件的绝对路径
                 var length = lstPictures.Count;
                 lstPictures.RemoveAt(length - 1);
-                Picture temPicture = new Picture();
-                temPicture.Source = openFileDialog.FileName;
-                lstPictures.Add(temPicture);
+                foreach (var fileName in openFileDialog.FileNames)
+                {
+                    Picture temPicture = new Picture();
+                    temPicture.Source = fileName;
+                    lstPictures.Add(temPicture);
+                }
+                
                 lstPictures.Add(AddButton);
             }
         }
@@ -177,7 +198,7 @@ namespace PictureList
         private DelegateCommand zoom;
         private DelegateCommand moveLeft;
         private DelegateCommand moveRight;
-
+        private IList selectedItems;
 
         //绑定界面的选择项
         //SeletedItem并不是ListBoxItem，而是ListBoxItem中存放的数据的类型，在本实例中为Picture
@@ -190,6 +211,7 @@ namespace PictureList
                 OnPropertyChange("SelectedItem");
             }
         }
+        
         //绑定选择项的序列号
         public int SelectedIndex
         {
@@ -198,6 +220,16 @@ namespace PictureList
             {
                 selectedIndex = value;
                 OnPropertyChange("SelectedIndex");
+            }
+        }
+
+        public IList SelectedItems
+        {
+            get {return selectedItems;}
+            set
+            {
+                selectedItems = value;
+                OnPropertyChange("SelectedItems");
             }
         }
 
