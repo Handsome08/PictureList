@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PictureList"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Title="FullPicture" Style="{StaticResource FullPictureWindowStyle}" Name="Fullpicture" >
-    <Grid Height="600" Width="1028" Background="#FFD8D8E0" Opacity="20">
+    <Grid Height="600" Width="1028" Background="#FFD8D8E0" Opacity="1">
         <Grid.CommandBindings>
             <CommandBinding Command="local:CustomCommands.Close" />
         </Grid.CommandBindings>

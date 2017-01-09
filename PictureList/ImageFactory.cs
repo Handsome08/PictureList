@@ -25,30 +25,19 @@ namespace PictureList
             //Console.WriteLine(path);
             //ObservableCollection<Picture> result = new ObservableCollection<Picture>();
             Directory.CreateDirectory("Temp");
+            
             foreach (string fileName in fileNames)
             {
                 if (fileName.EndsWith(".jpg") || fileName.EndsWith(".png"))
                 {
                     Console.WriteLine(fileName.Remove(0, 15));
-                    Picture temPicture;
                     //string temp = path + fileName;
                     //Console.WriteLine(temp);
                     //Image tempImage = new Image();
                     //tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
-                    System.Drawing.Image sourceImage = System.Drawing.Image.FromFile(fileName);
-                    string path = currentPath + "\\Temp" + fileName.Replace(currentPath + "\\Pictures" ,"");
-                    if (sourceImage.Height < 324 || sourceImage.Width < 576)
-                    {
-                        temPicture = new Picture(fileName,path);
-                        lstPictures.Add(temPicture);
-                        continue;
-                    }
-                    Bitmap thumb = new Bitmap(sourceImage,192,108);
-                    Console.WriteLine(path);
-                    thumb.Save(path);
-                    temPicture = new Picture();
-                    temPicture.Source = fileName;
-                    temPicture.ThumbPath = path;
+                    string thumbPath = currentPath + "\\Temp" + fileName.Replace(currentPath + "\\Pictures", "");
+                    Picture temPicture = CheckImagePixel(fileName, thumbPath);
+
                     lstPictures.Add(temPicture);
                 }
             }
@@ -56,6 +45,22 @@ namespace PictureList
         }
 
         private  Picture addButton = new Picture("+","+");
+
+        //fileName是全路径,thumbPath是保存缩略图的位置：可执行程序目录下的Temp文件夹（包括缩略图名称扩展名）
+        public static Picture CheckImagePixel(string fileName,string thumbPath)
+        {
+            System.Drawing.Image sourceImage = System.Drawing.Image.FromFile(fileName);
+            if (sourceImage.Height < 324 || sourceImage.Width < 576)
+            {
+                return new Picture(fileName, fileName);
+            }
+            Bitmap thumb = new Bitmap(sourceImage, 192, 108);
+            Console.WriteLine(thumbPath);
+            sourceImage.Dispose();
+            thumb.Save(thumbPath);
+            thumb.Dispose();
+            return new Picture(fileName, thumbPath);
+        }
 
         private  ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
 

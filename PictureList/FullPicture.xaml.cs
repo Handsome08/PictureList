@@ -23,8 +23,9 @@ namespace PictureList
         {
             InitializeComponent();
             
-            this.Top = (screenHeight - this.Height)/2;
-            this.Left = (screenWidth - this.Width)/2;
+            //使用WinStartUpLocation代替
+            //this.Top = (screenHeight - this.Height)/2;
+            //this.Left = (screenWidth - this.Width)/2;
 
             //创建命令绑定，并添加到CommandBindings中
             CommandBinding bindingClose = new CommandBinding(CustomCommands.Close);
@@ -38,8 +39,8 @@ namespace PictureList
             this.Close();
         }
         //获取显示器屏幕的高度和宽度
-        private readonly double screenHeight = SystemParameters.FullPrimaryScreenHeight;
-        private readonly double screenWidth = SystemParameters.FullPrimaryScreenWidth;
+        //private readonly double screenHeight = SystemParameters.FullPrimaryScreenHeight;
+        //private readonly double screenWidth = SystemParameters.FullPrimaryScreenWidth;
         //鼠标滚轮缩放图片
         private void Image_MouseWheel(object sender, MouseWheelEventArgs e)
         {

@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Win32;
 
@@ -91,7 +93,7 @@ namespace PictureList
                 return true;
             }
         }
-        //obj是ListBoxItem对象,通过CommandParameter传入
+        //obj是ListBoxItem对象中的Picture,通过CommandParameter传入
         private void MoveLeftExcuted(object obj)
         {
             //Picture tempItem = (Picture)SelectedItem;
@@ -156,7 +158,7 @@ namespace PictureList
             fullPicture.DataContext = SelectedItem;
             fullPicture.Show();
         }
-
+        
         private bool ZoomCanExcuteCommand(object obj)
         {
             if (SelectedItem != null)
@@ -173,15 +175,24 @@ namespace PictureList
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = @"D:\";
             openFileDialog.Filter = "图片|*.png;*.jpg";
+            string applicationPath = Directory.GetCurrentDirectory();
             if (openFileDialog.ShowDialog() == true)
             {
-                //FileName返回的是文件的绝对路径
+                
                 var length = lstPictures.Count;
                 lstPictures.RemoveAt(length - 1);
+                //获取当前用户所选择的路径
+                
+                string dialogDirectory = openFileDialog.FileNames[0].Replace(openFileDialog.SafeFileNames[0], "");
                 foreach (var fileName in openFileDialog.FileNames)
                 {
-                    Picture temPicture = new Picture();
-                    temPicture.Source = fileName;
+                    string thumbPath = applicationPath + "\\Temp\\" + fileName.Replace(dialogDirectory, "");
+                    if (File.Exists(thumbPath))
+                    {
+                        MessageBox.Show("Picture you choose：" + fileName.Replace(dialogDirectory,"") + " is Existed!");
+                        continue;
+                    }
+                    Picture temPicture = ImageFactory.CheckImagePixel(fileName,thumbPath);
                     lstPictures.Add(temPicture);
                 }
                 
