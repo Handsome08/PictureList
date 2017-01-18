@@ -5,16 +5,25 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
 using Microsoft.Win32;
+using static System.Threading.Thread;
 
 namespace PictureList
 {
     class PictureListViewModel : INotifyPropertyChanged
     {
+        static PictureListViewModel()
+        {
+            delete = new DelegateCommand(DeleteExcuted, DeleteCanExcuteCommand);
+        }
         public PictureListViewModel()
         {
             ImageFactory imageFactory = new ImageFactory();
@@ -29,7 +38,7 @@ namespace PictureList
             add = new DelegateCommand(AddExcuted, null);
 
             //删除按钮的命令
-            delete = new DelegateCommand(DeleteExcuted, DeleteCanExcuteCommand);
+            //delete = new DelegateCommand(DeleteExcuted, DeleteCanExcuteCommand);
 
             //放大图片的按钮
             zoom = new DelegateCommand(ZoomExcuted, ZoomCanExcuteCommand);
@@ -41,19 +50,23 @@ namespace PictureList
             moveRight = new DelegateCommand(MoveRightExcuted, MoveRightCanExcuteCommand);
         }
 
-        private void DeleteExcuted(object obj)
+        public static void DeleteExcuted(object obj)
         {
             //int index = selectedIndex;
             while (selectedItem != null)
             {
-                lstPictures.RemoveAt(SelectedIndex);
+                lstPictures.RemoveAt(selectedIndex);
+            }
+            if (lstPictures.Count == 0)
+            {
+                lstPictures.Add(AddButton);
             }
             
         }
 
-        private bool DeleteCanExcuteCommand(object obj)
+        public static bool DeleteCanExcuteCommand(object obj)
         {
-            if (SelectedItem != null)
+            if (selectedItem != null)
             {
                 return true;
             }
@@ -169,48 +182,119 @@ namespace PictureList
             return false;
         }
 
+        private static string dialogDirectory;
+        private static string[] fileNames;
         private void AddExcuted(object obj)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = @"D:\";
             openFileDialog.Filter = "图片|*.png;*.jpg";
-            string applicationPath = Directory.GetCurrentDirectory();
+            //string applicationPath = Directory.GetCurrentDirectory();
             if (openFileDialog.ShowDialog() == true)
             {
                 
-                var length = lstPictures.Count;
-                lstPictures.RemoveAt(length - 1);
+                //var length = lstPictures.Count;
+                //lstPictures.RemoveAt(length - 1);
                 //获取当前用户所选择的路径
-                
-                string dialogDirectory = openFileDialog.FileNames[0].Replace(openFileDialog.SafeFileNames[0], "");
-                foreach (var fileName in openFileDialog.FileNames)
-                {
-                    string thumbPath = applicationPath + "\\Temp\\" + fileName.Replace(dialogDirectory, "");
-                    if (File.Exists(thumbPath))
-                    {
-                        MessageBox.Show("Picture you choose：" + fileName.Replace(dialogDirectory,"") + " is Existed!");
-                        continue;
-                    }
-                    Picture temPicture = ImageFactory.CheckImagePixel(fileName,thumbPath);
-                    lstPictures.Add(temPicture);
-                }
-                
-                lstPictures.Add(AddButton);
+                dialogDirectory = openFileDialog.FileNames[0].Replace(openFileDialog.SafeFileNames[0], "");
+                //前9张图片一次性显示出来
+                //int firstShowCount = 9;
+                fileNames = openFileDialog.FileNames;
+                ShowPictures(fileNames);
             }
         }
 
+        public void ShowPictures(string[] fileNames)
+        {
+            var length = lstPictures.Count;
+            lstPictures.RemoveAt(length - 1);
+            //前9张图片一次性显示出来
+            int firstShowCount = 9;
+            if (fileNames.Length < 9)
+            {
+                firstShowCount = fileNames.Length;
+            }
+            for (int i = 0; i < firstShowCount; i++)
+            {
+                lstPictures.Add(GetPicture(fileNames[i]));
+            }
+            LoadImageBackground(fileNames, firstShowCount);
+            Console.WriteLine("Add Complete!");
+        }
+
+        private async Task LoadImageBackground(string[] fileNames,int ignoreCount)
+        {
+            List<Picture> temPictures = new List<Picture>();
+            await Task.Run(() =>
+            {
+                foreach (var fileName in fileNames)
+                {
+                    if (ignoreCount-- >= 0)
+                    {
+                        continue;
+                    }
+                    Picture tempPicture = GetPicture(fileName);
+                    if (tempPicture != null)
+                    {
+                        temPictures.Add(tempPicture);
+                    }
+                }
+                temPictures.Add(AddButton);
+            });
+            //由于不能在非主线程中对和界面绑定的集合进行操作，所以需要使用线程池去操作
+            AddPicture(temPictures);
+            
+        }
+
+        private void AddPicture(List<Picture> tempPictures)
+        {
+            //ThreadPool.QueueUserWorkItem(delegate
+            //{
+            //    SynchronizationContext.SetSynchronizationContext(new
+            //        System.Windows.Threading.DispatcherSynchronizationContext(
+            //            Application.Current.Dispatcher));
+            //    SynchronizationContext.Current.Send(p1 =>
+            //    {
+            //        lstPictures.Add(tempPicture);
+            //    },null);
+            //});
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Render, new Action(() =>
+            {
+                foreach (var tempPicture in tempPictures)
+                {
+                    lstPictures.Add(tempPicture);
+                }
+            }));
+        }
+
+        //生成对应名称的图片对象
+        private Picture GetPicture(string fileName)
+        {
+
+            string applicationPath = Directory.GetCurrentDirectory();
+            //缩略图的名称按加入顺序定义， 确保不会重复
+            string thumbPath = Path.Combine(applicationPath + "\\Temp\\" + index++);
+            //if (File.Exists(thumbPath))
+            //{
+            //    MessageBox.Show("Picture you choose：" + fileName.Replace(dialogDirectory, "") + " is Existed!");
+            //    return null;
+            //}
+            return ImageFactory.CheckImagePixel(fileName, thumbPath);
+        }
 
         //命令和绑定数据
-        private object selectedItem;
-        private int selectedIndex;
+        private static object selectedItem;
+        private static int selectedIndex;
+
         private DelegateCommand add;
-        private DelegateCommand delete;
+        private static DelegateCommand delete;
         private DelegateCommand zoom;
         private DelegateCommand moveLeft;
         private DelegateCommand moveRight;
         private IList selectedItems;
 
+        private static int index = 0;
         //绑定界面的选择项
         //SeletedItem并不是ListBoxItem，而是ListBoxItem中存放的数据的类型，在本实例中为Picture
         public object SelectedItem
@@ -249,7 +333,7 @@ namespace PictureList
             get { return add; }
         }
 
-        public DelegateCommand DeleteCommand
+        public static DelegateCommand DeleteCommand
         {
             get { return delete; }
         }
@@ -271,13 +355,14 @@ namespace PictureList
 
         
         
-        private ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
+        private static ObservableCollection<Picture> lstPictures = new ObservableCollection<Picture>();
+        
         public ObservableCollection<Picture> LstPictures
         {
             get { return lstPictures; }
         } 
 
-        private Picture AddButton;
+        private static Picture AddButton;
 
         public event PropertyChangedEventHandler PropertyChanged;
 

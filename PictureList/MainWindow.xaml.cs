@@ -28,15 +28,19 @@ namespace PictureList
         {
             InitializeComponent();
 
+            //lstPictures.Add(AddButton);
+            pictureListViewModel = new PictureListViewModel();
+            DataContext = pictureListViewModel;
+
             TitleBar.MouseLeftButtonDown += TitleBar_MouseLeftButtonDown;
             TitleBar.MouseMove += TitleBar_MouseMove;
             TitleBar.MouseLeftButtonUp += TitleBar_MouseLeftButtonUp;
 
             
-            
-            //lstPictures.Add(AddButton);
-            PictureListViewModel pictureListViewModel = new PictureListViewModel();
-            DataContext = pictureListViewModel;
+            //MyCommandBinding deleteCommand = new MyCommandBinding();
+            //deleteCommand.Command = UiCommands.Delete;
+            //deleteCommand.DelegatedCommand = PictureListViewModel.DeleteCommand;
+            //this.CommandBindings.Add(deleteCommand);
 
             //Listbox.ItemsSource = lstPictures;
 
@@ -66,8 +70,8 @@ namespace PictureList
             //this.CommandBindings.Add(bindingMoveLeft);
             //this.CommandBindings.Add(bindingMoveRight);
         }
-        
 
+        private PictureListViewModel pictureListViewModel;
         //用于移动窗口的变量
         private bool CanWinMove = false;
         Point pos = new Point();
@@ -221,5 +225,35 @@ namespace PictureList
         //        lstPictures[index] = temp;
         //        Listbox.SelectedItem = Listbox.Items[index - 1];
         //    }
+        
+
+        private void Listbox_OnDrop(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                return;
+            }
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            List<string> fileList = new List<string>();
+            foreach (var file in files)
+            {
+                if (file.EndsWith(".jpg") || file.EndsWith(".png"))
+                {
+                    fileList.Add(file);
+                }
+            }
+            string[] fileNames = fileList.ToArray();
+            pictureListViewModel.ShowPictures(fileNames);
+        }
+
+        private void ListBoxItem_DragEnter(object sender, DragEventArgs e)
+        {
+            
+        }
+
+        private void ListBoxItem_DragLeave(object sender, DragEventArgs e)
+        {
+            
+        }
     }
 }

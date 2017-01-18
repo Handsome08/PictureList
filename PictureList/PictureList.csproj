@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CustomCommands.cs" />
     <Page Include="Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -123,15 +124,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <None Include="CustomListBox.xaml.cs">
-      <DependentUpon>CustomListBox.xaml</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Button.xaml.cs">
       <DependentUpon>Button.xaml</DependentUpon>
     </Compile>
-    <Compile Include="CustomCommands.cs" />
-    <Compile Include="CustomSelectedItems.cs" />
+    <Compile Include="CustomListBox.xaml.cs" />
     <Compile Include="DataContextConverter.cs" />
     <Compile Include="DelegateCommand.cs" />
     <Compile Include="FullPicture.xaml.cs">
@@ -147,6 +143,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MyCommandBinding.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="PictureListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -166,7 +163,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

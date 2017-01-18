@@ -17,14 +17,30 @@ namespace PictureList
             LoadImages();
         }
 
-        //加载文件夹中的图片
+        //加载默认文件夹中的图片
         public void LoadImages()
         {
-            string[] fileNames = Directory.GetFiles(@"C:\Users\user\Documents\Visual Studio 2015\Projects\PictureList\PictureList\bin\Debug\Pictures");
+            string defaultPath = "C:\\";
+            string[] fileNames = Directory.GetFiles(defaultPath);
             string currentPath = Directory.GetCurrentDirectory();
             //Console.WriteLine(path);
             //ObservableCollection<Picture> result = new ObservableCollection<Picture>();
-            Directory.CreateDirectory("Temp");
+
+            //启动时清空缓存
+            if (Directory.Exists(currentPath + "\\Temp"))
+            {
+                Directory.Delete(currentPath + "\\Temp",true);
+            }
+
+            try
+            {
+                Directory.CreateDirectory("Temp");
+            }
+            catch
+            {
+                
+            }
+            
             
             foreach (string fileName in fileNames)
             {
@@ -35,7 +51,7 @@ namespace PictureList
                     //Console.WriteLine(temp);
                     //Image tempImage = new Image();
                     //tempImage.Source = new BitmapImage(new Uri(fileName.Remove(0,6),UriKind.Relative));
-                    string thumbPath = currentPath + "\\Temp" + fileName.Replace(currentPath + "\\Pictures", "");
+                    string thumbPath = currentPath + "\\Temp" + fileName.Replace(defaultPath, "");
                     Picture temPicture = CheckImagePixel(fileName, thumbPath);
 
                     lstPictures.Add(temPicture);
@@ -54,11 +70,23 @@ namespace PictureList
             {
                 return new Picture(fileName, fileName);
             }
-            Bitmap thumb = new Bitmap(sourceImage, 192, 108);
-            Console.WriteLine(thumbPath);
-            sourceImage.Dispose();
-            thumb.Save(thumbPath);
-            thumb.Dispose();
+            //语法糖，离开代码块时自动调用对象的dispose()
+            using (sourceImage)
+            {
+                try
+                {
+                    //Bitmap占用内存，而且若发生异常内存会泄露，需要捕获异常
+                    Bitmap thumb = new Bitmap(sourceImage, 192, 108);
+                    Console.WriteLine(thumbPath);
+                    thumb.Save(thumbPath);
+                    thumb.Dispose();
+                }
+                catch
+                {
+                    
+                }
+            }
+            
             return new Picture(fileName, thumbPath);
         }
 

@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PictureList
 {
-    class CustomCommands
+    public class CustomCommands
     {
         static CustomCommands()
         {
             add = new RoutedUICommand("Add","Add",typeof(CustomCommands));
 
-            InputGestureCollection delete_input = new InputGestureCollection();
-            delete_input.Add(new KeyGesture(Key.Delete));
-            delete = new RoutedUICommand("Delete","Delete",typeof(CustomCommands),delete_input);
+            //InputGestureCollection delete_input = new InputGestureCollection();
+            //delete_input.Add(new KeyGesture(Key.Delete));
+            //delete = new RoutedUICommand("Delete", "Delete", typeof(CustomCommands), delete_input);
 
             InputGestureCollection zoom_input = new InputGestureCollection();
             zoom_input.Add(new MouseGesture(MouseAction.LeftDoubleClick));
@@ -30,8 +31,13 @@ namespace PictureList
 
             moveright = new RoutedUICommand("MoveRight","MoveRight",typeof(CustomCommands));
         }
-        
-        private static RoutedUICommand delete;
+
+        private static void DeleteBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static RoutedUICommand delete = new RoutedUICommand();
         private static RoutedUICommand zoom;
         private static RoutedUICommand close;
 

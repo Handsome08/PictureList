@@ -6,7 +6,22 @@
         xmlns:local="clr-namespace:PictureList"
         mc:Ignorable="d"
         Title="MainWindow" Height="435" Width="665" Style="{StaticResource MainWindowStyle}" >
-
+    
+    <Window.CommandBindings>
+        <local:MyCommandBinding Command="Delete" DelegatedCommand="{x:Static local:PictureListViewModel.DeleteCommand}" />
+    </Window.CommandBindings>
+    <Window.Resources>
+        <EventSetter x:Key="DragEnter" Event="ListBoxItem.DragEnter" Handler="ListBoxItem_DragEnter" />
+        <EventSetter x:Key="DragLeave" Event="ListBoxItem.DragLeave" Handler="ListBoxItem_DragLeave" />
+        <LinearGradientBrush x:Key="Title_Background">
+            <GradientStop Color="Yellow" Offset="0" />
+            <GradientStop Color="Red" Offset="0.18" />
+            <GradientStop Color="Blue" Offset="0.55" />
+            <GradientStop Color="LimeGreen" Offset="0.8" />
+            <GradientStop Color="Gainsboro" Offset="0.96" />
+        </LinearGradientBrush>
+    </Window.Resources>
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="30"></RowDefinition>
@@ -18,9 +33,10 @@
             <ColumnDefinition Width="184"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.ColumnSpan="3" Background="Gainsboro" Opacity="100" Name="TitleBar">
-            <StackPanel  Orientation="Horizontal" >
-                <Label VerticalAlignment="Center" Height="29" FontSize="15">图片浏览器</Label>
+        <Grid Grid.ColumnSpan="3" Background="{StaticResource Title_Background}" Opacity="100" Name="TitleBar">
+            <StackPanel  Orientation="Horizontal">
+                <Label VerticalAlignment="Center" Height="29" FontSize="15" Content="图片浏览器">
+                </Label>
             </StackPanel>
             <Button  Style="{StaticResource CloseButtonStyle}" HorizontalAlignment="Right" 
                      FontFamily="Microsoft Ya Hei" FontSize="18" Click="ButtonX_OnClick" />
@@ -29,8 +45,8 @@
 
         <Border Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BorderBrush="Gainsboro" BorderThickness="0,0,0,1" Padding="0,0,0,3" Name="ListBoxBorder">
             <ListBox Name="Listbox" Style="{StaticResource CustomListBox}" SelectedIndex="{Binding Path=SelectedIndex,Mode=OneWayToSource}" 
-                     ItemsSource="{Binding Path=LstPictures}" SelectionMode="Multiple" SelectedItem="{Binding Path=SelectedItem}"
-                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" local:CustomSelectedItems.SelectedItems="{Binding Path=SelectedItems}">
+                     ItemsSource="{Binding Path=LstPictures}" SelectionMode="Extended" SelectedItem="{Binding Path=SelectedItem}" 
+                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" AllowDrop="True" Drop="Listbox_OnDrop">
                 <!--数据容器选择器-->
                 <ListBox.ItemContainerStyleSelector>
                     <local:ListBoxItemContainerTemplateSelector
@@ -46,7 +62,7 @@
             </ListBox>
         </Border>
         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
-            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="{Binding DeleteCommand}">
+            <Button  Height="26" Width="80" Margin="0,13,6,10" Command="Delete">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="White" />

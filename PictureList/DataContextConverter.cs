@@ -28,6 +28,11 @@ namespace PictureList
                     case "AddCommand":
                         return pictureListViewModel.AddCommand;
 
+                    case "DeleteCommand":
+                        return PictureListViewModel.DeleteCommand;
+
+                    case "ZoomCommand":
+                        return pictureListViewModel.ZoomCommand;
                     default:
                         return null;
 

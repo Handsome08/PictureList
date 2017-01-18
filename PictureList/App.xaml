@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="CustomListBox.xaml"/>
                 <ResourceDictionary Source="CustomWindow.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <RoutedCommand x:Key="DeleteCommand"></RoutedCommand>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

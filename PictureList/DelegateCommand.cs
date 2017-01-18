@@ -11,9 +11,9 @@ namespace PictureList
 {
     public class DelegateCommand : ICommand
     {
-        private Action<object> ExcutedCommand = null;
+        private Action<object> ExcutedCommand;
 
-        private Func<object,bool> CanExcuteCommand = null;
+        private Func<object,bool> CanExcuteCommand;
 
         //实现才可以在值变化时触发CanExcuteCommand
         public event EventHandler CanExecuteChanged
@@ -21,6 +21,8 @@ namespace PictureList
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+        
+        public DelegateCommand() { }
 
         public DelegateCommand(Action<object> excute, Func<object, bool> canexcute)
         {
@@ -28,6 +30,7 @@ namespace PictureList
             CanExcuteCommand = canexcute;
         } 
         
+
         
         public bool CanExecute(object parameter)
         {
